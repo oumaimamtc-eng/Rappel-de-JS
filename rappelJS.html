@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <script src=""></script>
+</head>
+<body>
+    <script>
+     //EXERCICE 1 :
+     class Student {
+          constructor(name, age) {
+               this.name = name;
+               this.age = age;
+               this.grades = []; 
+          }
+
+          addGrade(grade) {
+               this.grades.push(grade);
+          }
+
+          getAverageGrade() {
+               if (this.grades.length === 0) return 0;
+               let total = this.grades.reduce((sum, g) => sum + g, 0);
+               return (total / this.grades.length);
+          }
+          }
+
+     let students = [
+     new Student("oumaima", 23),
+     new Student("sondosse", 20),
+     new Student("houda", 19)
+     ];
+
+     students[0].addGrade(18);
+     students[0].addGrade(20);
+
+     students[1].addGrade(17);
+     students[1].addGrade(16);
+
+     students[2].addGrade(17);
+     students[2].addGrade(15);
+
+     console.log(" Moyenne de chaque étudiant :");
+     students.forEach(s =>
+     console.log(`Nom : ${s.name} la moyenne : ${s.getAverageGrade()}`)
+     );
+
+     let moyenneGeneral = students.reduce((sum, s) => sum + s.getAverageGrade(), 0) / students.length;
+     console.log("\n Moyenne générale des étudiants :", moyenneGeneral);
+
+     let nom = students.find(s => s.name === "oumaima");
+     console.log("\n Recherche Oumaima :", nom);
+
+     let nStudents = students.filter(s => s.getAverageGrade() >= 12);
+
+     console.log("\n Étudiants avec moyenne ≥ 12 :");
+     nStudents.forEach(s =>
+     console.log(`Nom : ${s.name} |Age : ${s.age} |la moyenne des notes : ${s.getAverageGrade()}`)
+     );
+
+     let triezStudents = [...students].sort((a, b) => b.getAverageGrade() - a.getAverageGrade());
+
+     console.log("\n moyenne décroissante :");
+     triezStudents.forEach(s =>
+     console.log(`${s.name} → ${s.getAverageGrade()}`)
+     );
+     //EXERCICE 2 :
+     class Book {
+          constructor(title, author, year) {
+               this.title = title;
+               this.author = author;
+               this.year = year;}
+          }
+
+     class Library {
+          constructor() {
+               this.books = [];
+          }
+
+          addBook(book) {
+               this.books.push(book);
+          }
+
+          findBooksByAuthor(author) {
+               return this.books.filter(b => b.author === author);
+          }
+
+          displaySummary() {
+               console.log("\n les informations des livres :");
+               this.books.forEach(b => console.log(`${b.title} | ${b.author}`));
+          }
+
+          countBooksByAuthor(author) {
+               return this.findBooksByAuthor(author).length;
+          }
+
+          getOldestBook() {
+               return this.books.reduce((old, b) =>
+                    (b.year < old.year ? b : old)
+               );
+          }
+
+          removeBook(title) {
+               for (let i = 0; i < this.books.length; i++) {
+                    if (this.books[i].title === title) {
+                         this.books.splice(i, 1);
+                         return;
+                    }
+               }
+               console.log("Livre introuvable !");
+               }
+
+     }
+
+     let myLibrary = new Library();
+     myLibrary.addBook(new Book("JavaScript", "John Doe", 2019));
+     myLibrary.addBook(new Book("Web ", "Amine Ali", 2015));
+     myLibrary.addBook(new Book("Coding Life", "John Doe", 2010));
+
+     myLibrary.displaySummary();
+     console.log("\n Livres de John Doe :", myLibrary.findBooksByAuthor("John Doe"));
+     console.log("\n Nombre de livres de John Doe :", myLibrary.countBooksByAuthor("John Doe"));
+     console.log("\n Livre le plus ancien :", myLibrary.getOldestBook());
+     myLibrary.removeBook("JavaScript");
+     // EXERCICE 3 :
+     class Product {
+          constructor(name, price, category) {
+               this.name = name;
+               this.price = price;
+               this.category = category;
+          }
+          }
+
+     class Store {
+          constructor() {
+               this.inventory = [];
+          }
+
+          addProduct(product) {
+               this.inventory.push(product);
+          }
+
+          filterByCategory(category) {
+               return this.inventory.filter(p => p.category === category);
+          }
+
+          calculateTotalInventoryValue() {
+               return this.inventory.reduce((sum, p) => sum + p.price, 0);
+          }
+
+          displayInventory() {
+               console.log("\n les produits :");
+               this.inventory.forEach(p =>
+                    console.log(`${p.name} — ${p.category} — ${p.price} DH`)
+               );
+          }
+
+          searchByName(nom) {
+               return this.inventory.filter(p =>
+                    p.name.toLowerCase().includes(nom.toLowerCase())
+               );
+          }
+
+          filterByPrice(min, max) {
+               return this.inventory.filter(p =>
+                    p.price >= min && p.price <= max
+               );
+          }
+
+          mostExpensiveProduct() {
+               return this.inventory.reduce((max, p) =>
+                    p.price > max.price ? p : max
+               );
+          }
+
+          averagePrice() {
+               return this.calculateTotalInventoryValue() / this.inventory.length;
+          }
+     }
+
+    </script> 
+</body>
+</html>
